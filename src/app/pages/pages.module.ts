@@ -9,6 +9,7 @@ import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [DashboardComponent, Grafica1Component, ProgressComponent],
+  exports: [DashboardComponent, Grafica1Component, ProgressComponent],
   imports: [CommonModule, RouterModule, PagesRoutingModule],
 })
 export class PagesModule {}
