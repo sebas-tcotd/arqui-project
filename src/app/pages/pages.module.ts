@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
 
@@ -16,6 +18,7 @@ import { ProgressComponent } from './progress/progress.component';
   imports: [
     CommonModule,
     ComponentsModule,
+    FormsModule,
     RouterModule,
     PagesRoutingModule,
   ],
