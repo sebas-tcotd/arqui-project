@@ -1,19 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UsuarioService } from '../../services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
-  constructor(private router: Router) {}
+export class LoginComponent {
+  public formSubmitted: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService
+  ) {}
 
-  login() {
-    console.log('submit!');
+  public loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    rememberMe: [false],
+  });
 
-    this.router.navigateByUrl('/');
+  loginUser() {
+    this.usuarioService.loginUser(this.loginForm.value).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        Swal.fire('Error', err.error.msg, 'error');
+      }
+    );
+    // this.router.navigateByUrl('/');
   }
 }
