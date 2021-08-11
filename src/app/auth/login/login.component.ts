@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   loginUser() {
     this.usuarioService.loginUser(this.loginForm.value).subscribe(
-      (res) => {
+      () => {
         if (this.loginForm.get('rememberMe')?.value) {
           localStorage.setItem('email', this.loginForm.get('email')?.value);
           localStorage.setItem(
@@ -67,15 +67,11 @@ export class LoginComponent implements OnInit {
     this.startApp();
   }
 
-  startApp() {
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id:
-          '89398295150-i5gfmgmc293t3fuqdno55lfdn2fi194c.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-      });
-      this.attachSignin(document.getElementById('my-signin2')!);
-    });
+  async startApp() {
+    await this.usuarioService.googleInit();
+    this.auth2 = this.usuarioService.auth2;
+
+    this.attachSignin(document.getElementById('my-signin2')!);
   }
 
   attachSignin(element: HTMLElement) {
@@ -85,13 +81,11 @@ export class LoginComponent implements OnInit {
       (googleUser: any) => {
         const googleToken = googleUser.getAuthResponse().id_token;
 
-        this.usuarioService
-          .loginUserWithGoogle(googleToken)
-          .subscribe((res) => {
-            this.ngZone.run(() => {
-              this.router.navigateByUrl('/dashboard');
-            });
+        this.usuarioService.loginUserWithGoogle(googleToken).subscribe(() => {
+          this.ngZone.run(() => {
+            this.router.navigateByUrl('/dashboard');
           });
+        });
       },
       (error: any) => {
         alert(JSON.stringify(error, undefined, 2));
