@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
@@ -8,6 +9,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,11 @@ const routes: Routes = [
         data: { title: 'Promesas' },
       },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'RxJs' } },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { title: 'Perfil de usuario' },
+      },
     ],
   },
 ];
