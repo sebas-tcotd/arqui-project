@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
@@ -26,7 +27,11 @@ export class RegisterComponent {
     }
   );
 
-  constructor(private fb: FormBuilder, private usuario: UsuarioService) {}
+  constructor(
+    private fb: FormBuilder,
+    private usuario: UsuarioService,
+    private router: Router
+  ) {}
 
   createUser() {
     this.formSubmitted = true;
@@ -36,7 +41,7 @@ export class RegisterComponent {
     } else {
       this.usuario.createUser(this.registerForm.value).subscribe(
         (res) => {
-          console.log(res);
+          this.router.navigateByUrl('/dashboard');
         },
         (err) => {
           // Si ocurre un error
