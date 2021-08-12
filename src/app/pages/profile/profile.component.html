@@ -54,14 +54,29 @@
     <div class="card-body">
       <h4 class="card-title">Avatar</h4>
       <h6 class="card-subtitle">Imagen de usuario</h6>
-      <img src="" alt="" />
-      <input type="file" />
+      <div class="text-center">
+        <img
+          *ngIf="!temporalImage"
+          [src]="user.imageUrl"
+          alt=""
+          class="img-avatar"
+        />
+        <img
+          *ngIf="temporalImage"
+          [src]="temporalImage"
+          alt=""
+          class="img-avatar"
+        />
+      </div>
+      <input type="file" #fileInput (change)="changeImage($event)" />
       <br />
       <br />
       <div class="d-grid gap-2 d-md-block">
         <button
           type="submit"
           class="btn btn-success waves-effect waves-light m-r-10"
+          [disabled]="!userImage"
+          (click)="uploadImage()"
         >
           Cambiar imagen
         </button>

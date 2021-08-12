@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import Swal from 'sweetalert2';
+
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
-import Swal from 'sweetalert2';
+import { FileUploadService } from '../../services/file-upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +15,14 @@ import Swal from 'sweetalert2';
 export class ProfileComponent implements OnInit {
   public profileForm!: FormGroup;
   public user: Usuario;
+  public userImage!: File;
+  public temporalImage: string | null = null;
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private fileUploadService: FileUploadService
+  ) {
     this.user = usuarioService.usuario;
   }
 
@@ -36,5 +45,23 @@ export class ProfileComponent implements OnInit {
         'success'
       );
     });
+  }
+
+  changeImage(event: any) {
+    const file = event.target?.files[0];
+    this.userImage = file;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      this.temporalImage = reader.result as string;
+    };
+  }
+
+  uploadImage() {
+    this.fileUploadService
+      .updatePhoto(this.userImage, 'usuarios', this.usuarioService.uid)
+      .then((img) => (this.user.img = img));
   }
 }
