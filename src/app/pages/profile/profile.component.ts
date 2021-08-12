@@ -35,16 +35,24 @@ export class ProfileComponent implements OnInit {
 
   updateUserProfile() {
     Swal.showLoading();
-    this.usuarioService.updateUser(this.profileForm.value).subscribe(() => {
-      const { name, email } = this.profileForm.value;
-      this.user.name = name;
-      this.user.email = email;
-      Swal.fire(
-        '¡Genial!',
-        'Tus datos fueron actualizados correctamente.',
-        'success'
-      );
-    });
+    this.usuarioService.updateUser(this.profileForm.value).subscribe(
+      () => {
+        const { name, email } = this.profileForm.value;
+        this.user.name = name;
+        this.user.email = email;
+        Swal.fire(
+          '¡Genial!',
+          'Tus datos fueron actualizados correctamente.',
+          'success'
+        );
+      },
+      (err) =>
+        Swal.fire(
+          '¡Error!',
+          `${err.error.msg} <br> <strong>(Código ${err.status})</strong>`,
+          'error'
+        )
+    );
   }
 
   changeImage(event: any) {
@@ -60,8 +68,25 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage() {
+    Swal.showLoading();
     this.fileUploadService
       .updatePhoto(this.userImage, 'usuarios', this.usuarioService.uid)
-      .then((img) => (this.user.img = img));
+      .then(
+        (img) => {
+          this.user.img = img;
+          Swal.fire(
+            '¡Genial',
+            'Tu foto de perfil fue actualizada exitosamente.',
+            'success'
+          );
+        },
+        (err) => {
+          Swal.fire(
+            '¡Error!',
+            'Ocurrió un error al momento de actualizar tu imagen',
+            'error'
+          );
+        }
+      );
   }
 }
