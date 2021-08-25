@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
+import { LoadUsers } from '../interfaces/load-users.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { environment } from '../../environments/environment';
 import { LoginForm } from '../interfaces/login-form.interface';
@@ -37,6 +38,14 @@ export class UsuarioService {
     return this.usuario.uid || '';
   }
 
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token,
+      },
+    };
+  }
+
   async googleInit() {
     return new Promise<void>((resolve) => {
       gapi.load('auth2', () => {
@@ -51,21 +60,15 @@ export class UsuarioService {
   }
 
   validateToken(): Observable<boolean> {
-    return this.http
-      .get(`${baseUrl}/login/renew`, {
-        headers: {
-          'x-token': this.token,
-        },
-      })
-      .pipe(
-        map((res: any) => {
-          const { email, google, name, role, uid, img = '' } = res.user;
-          this.usuario = new Usuario(name, email, '', img, google, role, uid);
-          localStorage.setItem('token', res.token);
-          return true;
-        }),
-        catchError(() => of(false))
-      );
+    return this.http.get(`${baseUrl}/login/renew`, this.headers).pipe(
+      map((res: any) => {
+        const { email, google, name, role, uid, img = '' } = res.user;
+        this.usuario = new Usuario(name, email, '', img, google, role, uid);
+        localStorage.setItem('token', res.token);
+        return true;
+      }),
+      catchError(() => of(false))
+    );
   }
 
   createUser(formData: RegisterForm) {
@@ -81,11 +84,8 @@ export class UsuarioService {
       ...data,
       role: this.usuario.role!,
     };
-    return this.http.put(`${baseUrl}/usuarios/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token,
-      },
-    });
+
+    return this.http.put(`${baseUrl}/usuarios/${this.uid}`, data, this.headers);
   }
 
   loginUser(formData: LoginForm) {
@@ -112,5 +112,35 @@ export class UsuarioService {
         this.router.navigateByUrl('/login');
       });
     });
+  }
+
+  loadUsers(from: number = 0, limit: number = 5) {
+    const url = `${baseUrl}/usuarios?from=${from}&limit=${limit}`;
+    return this.http.get<LoadUsers>(url, this.headers).pipe(
+      map((res) => {
+        const users = res.usuarios.map(
+          (user) =>
+            new Usuario(
+              user.name,
+              user.email,
+              '',
+              user.img,
+              user.google,
+              user.role,
+              user.uid
+            )
+        );
+        return { total: res.total, users };
+      })
+    );
+  }
+
+  deleteUser(user: Usuario) {
+    const url = `${baseUrl}/usuarios/${user.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  changeUserRole(user: Usuario) {
+    return this.http.put(`${baseUrl}/usuarios/${user.uid}`, user, this.headers);
   }
 }
