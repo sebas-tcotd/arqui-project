@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Search } from '../interfaces/search.interface';
 import { Usuario } from '../models/usuario.model';
+import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 
 const baseUrl = environment.BASE_URL;
 
@@ -40,6 +42,26 @@ export class SearchesService {
     );
   }
 
+  private _transformHospitals(results: Hospital[]): Hospital[] {
+    return results.map(
+      (hospital) =>
+        new Hospital(hospital.name, hospital._id, hospital.img, hospital.user)
+    );
+  }
+
+  private _transformMedics(results: Medico[]): Medico[] {
+    return results.map(
+      (medico) =>
+        new Medico(
+          medico._id,
+          medico.name,
+          medico.img,
+          medico.user,
+          medico.hospital
+        )
+    );
+  }
+
   search(type: 'usuarios' | 'medicos' | 'hospitales', term: string) {
     const url = `${baseUrl}/todo/colection/${type}/${term}`;
 
@@ -47,8 +69,13 @@ export class SearchesService {
       map((res) => {
         switch (type) {
           case 'usuarios':
-            return this._transformUsers(res.resultados);
-            break;
+            return this._transformUsers(res.resultados as Usuario[]);
+
+          case 'hospitales':
+            return this._transformHospitals(res.resultados as Hospital[]);
+
+          case 'medicos':
+            return this._transformMedics(res.resultados as Medico[]);
 
           default:
             return [];
