@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -17,6 +18,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './maintenances/users/users.component';
 import { PagesComponent } from './pages.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
+import { MedicsComponent } from './maintenances/medics/medics.component';
+import { MedicComponent } from './maintenances/medics/medic.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,9 @@ import { PagesComponent } from './pages.component';
     RxjsComponent,
     ProfileComponent,
     UsersComponent,
+    HospitalsComponent,
+    MedicsComponent,
+    MedicComponent,
   ],
   exports: [
     DashboardComponent,
@@ -42,6 +49,7 @@ import { PagesComponent } from './pages.component';
     RouterModule,
     PagesRoutingModule,
     ReactiveFormsModule,
+    PipesModule,
   ],
 })
 export class PagesModule {}
