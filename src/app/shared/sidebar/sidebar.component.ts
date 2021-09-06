@@ -11,13 +11,13 @@ import { Usuario } from '../../models/usuario.model';
 export class SidebarComponent implements OnInit {
   public user!: Usuario;
   public menuItems: any[] = [];
+  public userName: string = '';
 
   constructor(
-    private sidebarService: SidebarService,
+    public sidebarService: SidebarService,
     private usuarioService: UsuarioService
   ) {
-    this.menuItems = this.sidebarService.menu;
-    this.user = usuarioService.usuario;
+    this.userName = localStorage.getItem('userName') as string;
   }
 
   ngOnInit(): void {}
