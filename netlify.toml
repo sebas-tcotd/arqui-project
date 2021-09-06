@@ -1,3 +1,6 @@
+[build]
+  publish = "dist/adminpro"
+  command = "ng build"
 [[redirects]]
   from = "/*"
   to = "/index.html"
