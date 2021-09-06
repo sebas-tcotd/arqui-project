@@ -18,7 +18,9 @@ export class ClinicHistoryService {
 
   loadClinicHistories() {
     return this.http
-      .get<ClinicHistoryResponse>('http://45.55.106.173:5000/histories')
+      .get<ClinicHistoryResponse>(
+        'https://cm-sgd-histories.herokuapp.com/histories'
+      )
       .pipe(map((res) => res.histories));
   }
 }

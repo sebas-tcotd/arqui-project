@@ -1,5 +1,13 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalImageService } from '../../services/modal-image.service';
 
 @Component({
   selector: 'app-clinic-form',
@@ -10,11 +18,10 @@ export class ClinicFormComponent implements OnInit {
   public clinicHistoryForm!: FormGroup;
   public formSubmitted: boolean = false;
 
-  @Input() isVisible!: boolean;
+  @Input() isVisible: boolean = true;
   @Output() formEmitter: EventEmitter<FormGroup> = new EventEmitter();
-  @Output() closeFormEmitter: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, public modal: ModalImageService) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -65,13 +72,42 @@ export class ClinicFormComponent implements OnInit {
       return;
     }
 
-    this.formEmitter.emit(this.clinicHistoryForm);
+    const form = this.clinicHistoryForm;
+
+    this.formEmitter.emit(form);
+    this.cleanFormFields();
   }
 
   isFieldValid(field: string): boolean {
+    if (this.formSubmitted) {
+      return false;
+    }
+
     if (this.clinicHistoryForm.get(field)?.invalid && this.formSubmitted) {
       return true;
     }
+
     return false;
+  }
+
+  closeModal() {
+    this.clinicHistoryForm.reset();
+    this.modal.closeModal();
+  }
+
+  private cleanFormFields() {
+    if (this.clinicHistoryForm.dirty) {
+      this.clinicHistoryForm.setValue({
+        admision_date: '',
+        diagnostic: '',
+        medic_name: '',
+        patient_birth_date: '',
+        patient_dni: '',
+        patient_name: '',
+        patient_number: '',
+        patient_sex: '',
+      });
+      this.closeModal();
+    }
   }
 }

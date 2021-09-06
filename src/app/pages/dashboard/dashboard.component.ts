@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClinicHistoryService } from '../../services/clinic-history.service';
 import { History } from '../../models/clinicHistory.model';
 import Swal from 'sweetalert2';
+import { ModalImageService } from '../../services/modal-image.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,20 +12,22 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
   public historyClinicForm!: FormGroup;
-  public toggledForm: boolean = false;
   public clinicHistories: History[] = [];
 
-  constructor(private clinicHistoryService: ClinicHistoryService) {}
+  constructor(
+    private clinicHistoryService: ClinicHistoryService,
+    public modal: ModalImageService
+  ) {}
 
   ngOnInit(): void {
     this.clinicHistoryService.loadClinicHistories().subscribe((res) => {
-      console.log(res);
       this.clinicHistories = res.reverse();
     });
   }
 
   createHistoryForm() {
-    this.toggledForm = true;
+    // this.toggledForm = true;
+    this.modal.openModal();
   }
 
   receiveForm(event: FormGroup) {
@@ -47,9 +50,12 @@ export class DashboardComponent implements OnInit {
     body.append('patient_number', data.patient_number.toString());
     body.append('patient_sex', data.patient_sex);
 
+    Swal.showLoading();
+
     this.clinicHistoryService.createClinicHistory(body).subscribe(
       () => {
         this.clinicHistories.unshift(data);
+        this.modal.closeModal();
         Swal.fire('¡Éxito!', 'Historia clínica creada.', 'success');
       },
       (err) => {

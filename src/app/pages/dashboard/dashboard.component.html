@@ -1,4 +1,9 @@
-<button class="btn btn-primary mb-4" (click)="createHistoryForm()">
+<button
+  class="btn btn-primary mb-4"
+  (click)="createHistoryForm()"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+>
   Crear historia
 </button>
 
@@ -12,7 +17,7 @@
     <div class="col" *ngFor="let history of clinicHistories">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-subtitle">
+          <h5 class="card-title">
             Número de historia: <strong>{{ history.patient_number }}</strong>
           </h5>
           <h5 class="card-subtitle mb-2">
@@ -40,17 +45,10 @@
               <td>{{ history.diagnostic }}</td>
             </tbody>
           </table>
-          <div class="card-footer">
-            <small>Identificador: {{ history.history_id }}</small>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </ng-template>
 
-<app-clinic-form
-  (formEmitter)="receiveForm($event)"
-  (closeFormEmitter)="toggledForm = $event"
-  [isVisible]="toggledForm"
-></app-clinic-form>
+<app-clinic-form (formEmitter)="receiveForm($event)"></app-clinic-form>

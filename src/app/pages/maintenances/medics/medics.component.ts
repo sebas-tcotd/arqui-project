@@ -46,9 +46,9 @@ export class MedicsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModal(medic: Medico) {
-    this.modalImageService.openModal('medicos', medic._id as string, medic.img);
-  }
+  // openModal(medic: Medico) {
+  //   this.modalImageService.openModal('medicos', medic._id as string, medic.img);
+  // }
 
   search(term: string) {
     if (term.length === 0) return (this.medics = this.temporalMedics);
