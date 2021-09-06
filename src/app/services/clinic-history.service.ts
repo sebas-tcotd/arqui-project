@@ -12,12 +12,12 @@ export class ClinicHistoryService {
   constructor(private http: HttpClient) {}
 
   createClinicHistory(body: any) {
-    return this.http.post(`${url}/history`, body);
+    return this.http.post(`${url}/history/`, body);
   }
 
   loadClinicHistories() {
     return this.http
-      .get<ClinicHistoryResponse>(`${url}/histories`)
+      .get<ClinicHistoryResponse>(`${url}/histories/`)
       .pipe(map((res) => res.histories));
   }
 }
