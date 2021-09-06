@@ -23,6 +23,9 @@
   overflow-y: auto;
 }
 
+.w75 {
+  width: 75px;
+}
 .w100 {
   width: 100px;
 }
@@ -50,4 +53,8 @@
 
 .oculto {
   display: none;
+}
+
+.navbar-header {
+  width: auto;
 }

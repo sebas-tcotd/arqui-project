@@ -1,1 +1,54 @@
-<p>dashboard works!</p>
+<button
+  class="btn btn-primary mb-4"
+  (click)="createHistoryForm()"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+>
+  Crear historia
+</button>
+
+<div *ngIf="clinicHistories.length === 0; else withHistories">
+  <p>Todavía no hay historias clínicas. ¡Crea una ahora!</p>
+</div>
+
+<ng-template #withHistories>
+  <h2>Historias clínicas</h2>
+  <div class="row">
+    <div class="col" *ngFor="let history of clinicHistories">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Número de historia: <strong>{{ history.patient_number }}</strong>
+          </h5>
+          <h5 class="card-subtitle mb-2">
+            Médico encargado:
+            <strong class="text-bold">{{ history.medic_name }}</strong>
+          </h5>
+
+          <table class="table table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Nombre del paciente</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Fecha de nacimiento</th>
+                <th scope="col">Fecha de admisión</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Diagnóstico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>{{ history.patient_name }}</td>
+              <td>{{ history.patient_dni }}</td>
+              <td>{{ history.patient_birth_date | date }}</td>
+              <td>{{ history.admision_date | date }}</td>
+              <td>{{ history.patient_sex | patientSex }}</td>
+              <td>{{ history.diagnostic }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-clinic-form (formEmitter)="receiveForm($event)"></app-clinic-form>

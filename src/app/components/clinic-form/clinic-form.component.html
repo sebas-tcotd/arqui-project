@@ -1,0 +1,180 @@
+<div
+  class="fondo-modal-imagen animated fadeIn fast"
+  [class.oculto]="modal.hideModal"
+>
+  <div
+    class="modal fade show"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel1"
+    style="display: block"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel1">
+            Crea una historia clínica
+          </h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="closeModal()"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form
+            [formGroup]="clinicHistoryForm"
+            (ngSubmit)="submitForm()"
+            *ngIf="isVisible"
+          >
+            <div class="mb-3">
+              <label for="admision_date">Fecha de admisión</label>
+              <input
+                class="form-control"
+                type="date"
+                id="admision_date"
+                formControlName="admision_date"
+              />
+              <small class="text-danger" *ngIf="isFieldValid('admision_date')"
+                >Ingrese una fecha válida.</small
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="diagnostic">Diagnóstico</label>
+              <textarea
+                class="form-control"
+                id="diagnostic"
+                cols="30"
+                formControlName="diagnostic"
+                rows="5"
+                placeholder="Escriba el diagnóstico del paciente"
+                maxlength="500"
+              ></textarea>
+              <small class="text-danger" *ngIf="isFieldValid('diagnostic')"
+                >El diagnóstico no debe superar los 500 caracteres.</small
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="medic_name">Nombre del médico</label>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Ingrese el nombre del médico"
+                formControlName="medic_name"
+              />
+              <small class="text-danger" *ngIf="isFieldValid('medic_name')"
+                >Ingrese un nombre válido.</small
+              >
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-7">
+                <label for="patient_age">Nacimiento del paciente</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  id="patient_birth_date"
+                  formControlName="patient_birth_date"
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="isFieldValid('patient_birth_date')"
+                  >Ingrese una fecha válida.</small
+                >
+              </div>
+
+              <div class="col">
+                <label for="patient_dni">DNI del paciente</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="patient_dni"
+                  maxlength="8"
+                  formControlName="patient_dni"
+                />
+                <small class="text-danger" *ngIf="isFieldValid('patient_dni')"
+                  >Ingrese un número de DNI válido.</small
+                >
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col">
+                <label for="patient_name">Nombre del paciente</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="patient_name"
+                  placeholder="Ingrese el nombre del paciente"
+                  formControlName="patient_name"
+                />
+                <small class="text-danger" *ngIf="isFieldValid('patient_name')"
+                  >Ingrese un nombre válido de paciente.</small
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="patient_number">Número del paciente</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  min="1"
+                  id="patient_number"
+                  formControlName="patient_number"
+                />
+                <small
+                  class="text-danger"
+                  *ngIf="isFieldValid('patient_number')"
+                  >Ingrese un número válido</small
+                >
+              </div>
+              <div class="col-5">
+                <label for="patient_sex">Sexo del paciente</label>
+                <select
+                  id="patient_sex"
+                  class="form-control"
+                  formControlName="patient_sex"
+                >
+                  <option value="hombre">Masculino</option>
+                  <option value="mujer">Femenino</option>
+                </select>
+                <small class="text-danger" *ngIf="isFieldValid('patient_sex')"
+                  >Sea lo que haya ingresado, no es una opción válida.</small
+                >
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" (click)="submitForm()">
+            Crear historia clínica
+          </button>
+        </div>
+        <div
+          class="pb-2 px-3 mt-1"
+          *ngIf="clinicHistoryForm.invalid && formSubmitted"
+        >
+          <strong class="text-danger text-center"
+            >Tiene que llenar los campos correspondientes.</strong
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

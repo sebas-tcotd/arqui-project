@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
+import { Router } from '@angular/router';
+import { ModalImageService } from '../../services/modal-image.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +11,14 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class HeaderComponent implements OnInit {
   public user!: Usuario;
+  userName: string = '';
 
-  constructor(private usuarioService: UsuarioService) {
-    this.user = usuarioService.usuario;
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    public modal: ModalImageService
+  ) {
+    this.userName = localStorage.getItem('userName') as string;
   }
 
   logoutUser() {
@@ -19,4 +26,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  search(term: string) {
+    if (term.length === 0) this.router.navigateByUrl('/dashboard');
+    this.router.navigate(['dashboard', 'search', term]);
+  }
+
+  showClinicHistoryForm() {
+    this.modal.openModal();
+  }
 }

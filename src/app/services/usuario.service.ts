@@ -1,17 +1,16 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { tap, map, catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { tap, map, catchError, delay } from 'rxjs/operators';
+import { concat, Observable, of } from 'rxjs';
 
 import { LoadUsers } from '../interfaces/load-users.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { environment } from '../../environments/environment';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { Usuario } from '../models/usuario.model';
-
-declare const gapi: any;
+import { CookieService } from 'ngx-cookie-service';
 
 const baseUrl = environment.BASE_URL;
 
@@ -25,10 +24,9 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private ngZone: NgZone
-  ) {
-    this.googleInit();
-  }
+    private ngZone: NgZone,
+    private cookieService: CookieService
+  ) {}
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -41,30 +39,33 @@ export class UsuarioService {
   get headers() {
     return {
       headers: {
-        'x-token': this.token,
+        Authorization: `Basic ${btoa('mauricio_administrador4:12345678!')}`,
+        // Cookie: `${this.cookieService.get('csrftoken')}` || '',
       },
     };
   }
 
-  async googleInit() {
-    return new Promise<void>((resolve) => {
-      gapi.load('auth2', () => {
-        this.auth2 = gapi.auth2.init({
-          client_id:
-            '89398295150-i5gfmgmc293t3fuqdno55lfdn2fi194c.apps.googleusercontent.com',
-          cookiepolicy: 'single_host_origin',
-        });
-        resolve();
-      });
-    });
+  httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: `Basic ${btoa('mauricio_administrador4:12345678!')}`,
+    }),
+    withCredentials: true,
+    observe: 'response' as 'response',
+  };
+
+  saveInLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
+
+  generateCookie(body: FormData) {}
 
   validateToken(): Observable<boolean> {
     return this.http.get(`${baseUrl}/login/renew`, this.headers).pipe(
       map((res: any) => {
         const { email, google, name, role, uid, img = '' } = res.user;
         this.usuario = new Usuario(name, email, '', img, google, role, uid);
-        localStorage.setItem('token', res.token);
+        this.saveInLocalStorage(res.token, res.menu);
         return true;
       }),
       catchError(() => of(false))
@@ -74,7 +75,7 @@ export class UsuarioService {
   createUser(formData: RegisterForm) {
     return this.http.post(`${baseUrl}/usuarios`, formData).pipe(
       tap((res: any) => {
-        localStorage.setItem('token', res.token);
+        this.saveInLocalStorage(res.token, res.menu);
       })
     );
   }
@@ -88,30 +89,13 @@ export class UsuarioService {
     return this.http.put(`${baseUrl}/usuarios/${this.uid}`, data, this.headers);
   }
 
-  loginUser(formData: LoginForm) {
-    return this.http.post(`${baseUrl}/login`, formData).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-      })
-    );
-  }
-
-  loginUserWithGoogle(token: string) {
-    return this.http.post(`${baseUrl}/login/google`, { token }).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-      })
-    );
-  }
+  loginUser(body: FormData) {}
 
   logoutUser() {
     localStorage.removeItem('token');
-
-    this.auth2.signOut().then(() => {
-      this.ngZone.run(() => {
-        this.router.navigateByUrl('/login');
-      });
-    });
+    localStorage.removeItem('menu');
+    localStorage.removeItem('userName');
+    this.router.navigateByUrl('/register');
   }
 
   loadUsers(from: number = 0, limit: number = 5) {

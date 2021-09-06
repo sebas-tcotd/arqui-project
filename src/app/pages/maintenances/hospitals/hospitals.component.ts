@@ -93,11 +93,11 @@ export class HospitalsComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModal(hospital: Hospital) {
-    this.modalImageService.openModal(
-      'hospitales',
-      hospital._id as string,
-      hospital.img as string
-    );
-  }
+  // openModal(hospital: Hospital) {
+  //   this.modalImageService.openModal(
+  //     'hospitales',
+  //     hospital._id as string,
+  //     hospital.img as string
+  //   );
+  // }
 }

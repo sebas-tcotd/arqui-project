@@ -17,20 +17,8 @@ export class ModalImageService {
     return this._hideModal;
   }
 
-  openModal(
-    type: 'usuarios' | 'medicos' | 'hospitales',
-    id: string,
-    img: string = 'no-image'
-  ) {
+  openModal() {
     this._hideModal = false;
-    this.type = type;
-    this.id = id;
-    // this.img = img;
-    if (img.includes('https')) {
-      this.img = img;
-    } else {
-      this.img = `${base_url}/upload/${type}/${img}`;
-    }
   }
 
   closeModal() {

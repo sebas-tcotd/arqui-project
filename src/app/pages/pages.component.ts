@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
-
-declare function customInit(): void;
+import { SidebarService } from '../services/sidebar.service';
 
 @Component({
   selector: 'app-pages',
@@ -9,10 +8,15 @@ declare function customInit(): void;
   styles: [],
 })
 export class PagesComponent implements OnInit {
-  constructor(private settingsService: SettingsService) {}
+  public year = new Date();
+
+  constructor(
+    private settingsService: SettingsService,
+    private sidebarService: SidebarService
+  ) {}
 
   ngOnInit(): void {
     this.settingsService.setTheme();
-    customInit();
+    this.sidebarService.loadMenu();
   }
 }
