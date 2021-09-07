@@ -10,6 +10,6 @@ export interface History {
   patient_birth_date: string;
   patient_dni: string;
   patient_name: string;
-  patient_number: number;
+  history_number: number;
   patient_sex: string;
 }

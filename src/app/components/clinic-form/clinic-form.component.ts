@@ -59,7 +59,6 @@ export class ClinicFormComponent implements OnInit {
           ),
         ],
       ],
-      patient_number: ['', [Validators.required, Validators.min(0)]],
       patient_sex: ['', Validators.required],
     });
   }
@@ -78,11 +77,7 @@ export class ClinicFormComponent implements OnInit {
     this.cleanFormFields();
   }
 
-  isFieldValid(field: string): boolean {
-    if (this.formSubmitted) {
-      return false;
-    }
-
+  isFieldInvalid(field: string): boolean {
     if (this.clinicHistoryForm.get(field)?.invalid && this.formSubmitted) {
       return true;
     }
@@ -104,7 +99,6 @@ export class ClinicFormComponent implements OnInit {
         patient_birth_date: '',
         patient_dni: '',
         patient_name: '',
-        patient_number: '',
         patient_sex: '',
       });
       this.closeModal();

@@ -18,7 +18,8 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
-            Número de historia: <strong>{{ history.patient_number }}</strong>
+            Número de historia:
+            <strong>{{ history.history_number | clinicNumber }}</strong>
           </h5>
           <h5 class="card-subtitle mb-2">
             Médico encargado:

@@ -40,7 +40,7 @@
                 id="admision_date"
                 formControlName="admision_date"
               />
-              <small class="text-danger" *ngIf="isFieldValid('admision_date')"
+              <small class="text-danger" *ngIf="isFieldInvalid('admision_date')"
                 >Ingrese una fecha válida.</small
               >
             </div>
@@ -56,7 +56,7 @@
                 placeholder="Escriba el diagnóstico del paciente"
                 maxlength="500"
               ></textarea>
-              <small class="text-danger" *ngIf="isFieldValid('diagnostic')"
+              <small class="text-danger" *ngIf="isFieldInvalid('diagnostic')"
                 >El diagnóstico no debe superar los 500 caracteres.</small
               >
             </div>
@@ -69,7 +69,7 @@
                 placeholder="Ingrese el nombre del médico"
                 formControlName="medic_name"
               />
-              <small class="text-danger" *ngIf="isFieldValid('medic_name')"
+              <small class="text-danger" *ngIf="isFieldInvalid('medic_name')"
                 >Ingrese un nombre válido.</small
               >
             </div>
@@ -85,7 +85,7 @@
                 />
                 <small
                   class="text-danger"
-                  *ngIf="isFieldValid('patient_birth_date')"
+                  *ngIf="isFieldInvalid('patient_birth_date')"
                   >Ingrese una fecha válida.</small
                 >
               </div>
@@ -99,7 +99,7 @@
                   maxlength="8"
                   formControlName="patient_dni"
                 />
-                <small class="text-danger" *ngIf="isFieldValid('patient_dni')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patient_dni')"
                   >Ingrese un número de DNI válido.</small
                 >
               </div>
@@ -115,27 +115,12 @@
                   placeholder="Ingrese el nombre del paciente"
                   formControlName="patient_name"
                 />
-                <small class="text-danger" *ngIf="isFieldValid('patient_name')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patient_name')"
                   >Ingrese un nombre válido de paciente.</small
                 >
               </div>
             </div>
             <div class="row">
-              <div class="col">
-                <label for="patient_number">Número del paciente</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  min="1"
-                  id="patient_number"
-                  formControlName="patient_number"
-                />
-                <small
-                  class="text-danger"
-                  *ngIf="isFieldValid('patient_number')"
-                  >Ingrese un número válido</small
-                >
-              </div>
               <div class="col-5">
                 <label for="patient_sex">Sexo del paciente</label>
                 <select
@@ -146,7 +131,7 @@
                   <option value="hombre">Masculino</option>
                   <option value="mujer">Femenino</option>
                 </select>
-                <small class="text-danger" *ngIf="isFieldValid('patient_sex')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patient_sex')"
                   >Sea lo que haya ingresado, no es una opción válida.</small
                 >
               </div>

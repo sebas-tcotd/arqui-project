@@ -20,6 +20,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadHistories();
+  }
+
+  loadHistories() {
     this.clinicHistoryService.loadClinicHistories().subscribe((res) => {
       this.clinicHistories = res.reverse();
     });
@@ -47,16 +51,15 @@ export class DashboardComponent implements OnInit {
     body.append('patient_birth_date', data.patient_birth_date);
     body.append('patient_dni', data.patient_dni);
     body.append('patient_name', data.patient_name);
-    body.append('patient_number', data.patient_number.toString());
     body.append('patient_sex', data.patient_sex);
 
     Swal.showLoading();
 
     this.clinicHistoryService.createClinicHistory(body).subscribe(
       () => {
-        this.clinicHistories.unshift(data);
         this.modal.closeModal();
         Swal.fire('¡Éxito!', 'Historia clínica creada.', 'success');
+        this.loadHistories();
       },
       (err) => {
         console.error(err);
