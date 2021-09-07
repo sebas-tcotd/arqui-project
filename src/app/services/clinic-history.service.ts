@@ -12,18 +12,23 @@ const url = 'http://143.244.212.218:5000';
 export class ClinicHistoryService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
-  trustedUrl = this.sanitizer.sanitize(
-    SecurityContext.URL,
-    this.sanitizer.bypassSecurityTrustUrl(url)
-  );
-
   createClinicHistory(body: any) {
-    return this.http.post(`${this.trustedUrl}/history`, body);
+    const trustedUrl = this.sanitizer.sanitize(
+      SecurityContext.URL,
+      this.sanitizer.bypassSecurityTrustUrl(`${url}/history`)
+    );
+
+    return this.http.post(`${trustedUrl}`, body);
   }
 
   loadClinicHistories() {
+    const trustedURL = this.sanitizer.sanitize(
+      SecurityContext.URL,
+      this.sanitizer.bypassSecurityTrustUrl(`${url}/histories`)
+    );
+
     return this.http
-      .get<ClinicHistoryResponse>(`${this.trustedUrl}/histories`)
+      .get<ClinicHistoryResponse>(`${trustedURL}`)
       .pipe(map((res) => res.histories));
   }
 }
