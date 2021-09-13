@@ -78,6 +78,13 @@ export class ClinicFormComponent implements OnInit {
   }
 
   isFieldInvalid(field: string): boolean {
+    if (
+      this.clinicHistoryForm.get(field)?.invalid &&
+      this.clinicHistoryForm.touched
+    ) {
+      return false;
+    }
+
     if (this.clinicHistoryForm.get(field)?.invalid && this.formSubmitted) {
       return true;
     }
