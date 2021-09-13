@@ -73,7 +73,7 @@ export class UsuarioService {
   }
 
   createUser(formData: RegisterForm) {
-    return this.http.post(`${baseUrl}/usuarios`, formData).pipe(
+    return this.http.post(`http://174.138.108.150:5000/register`, formData).pipe(
       tap((res: any) => {
         this.saveInLocalStorage(res.token, res.menu);
       })
