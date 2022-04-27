@@ -1,15 +1,16 @@
 export interface ClinicHistoryResponse {
-  histories: History[];
+  ok: boolean;
+  message: string;
+  appointments: Appointment[];
 }
 
-export interface History {
-  admision_date: string;
-  diagnostic: string;
-  history_id: string;
-  medic_name: string;
-  patient_birth_date: string;
-  patient_dni: string;
-  patient_name: string;
-  history_number: number;
-  patient_sex: string;
+export interface Appointment {
+  _id: string;
+  patientName: string;
+  patientDni: string;
+  patientBirthdate: string;
+  patientSex: string;
+  medicName: string;
+  admisionDate: string;
+  __v: number;
 }

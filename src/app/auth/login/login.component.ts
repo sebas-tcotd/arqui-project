@@ -26,15 +26,23 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   public loginForm = this.fb.group({
-    username: [localStorage.getItem('email') || '', [Validators.required]],
+    cpm: [localStorage.getItem('cpm') || '', [Validators.required]],
     password: ['', Validators.required],
     rememberMe: [localStorage.getItem('remember') || false],
   });
 
   loginUser() {
-    const body: FormData = new FormData();
+    const body = {
+      cpm: this.loginForm.get('cpm')?.value,
+      password: this.loginForm.get('password')?.value,
+    };
 
-    localStorage.setItem('userName', this.loginForm.get('username')?.value);
-    this.router.navigateByUrl('/dashboard');
+    this.usuarioService.loginUser(body).subscribe(
+      (res) => {
+        localStorage.setItem('cpm', this.loginForm.get('cpm')?.value);
+        this.router.navigateByUrl('/dashboard');
+      },
+      (err) => console.error(err.error.message)
+    );
   }
 }

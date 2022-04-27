@@ -73,11 +73,13 @@ export class UsuarioService {
   }
 
   createUser(formData: RegisterForm) {
-    return this.http.post(`http://174.138.108.150:5000/register`, formData).pipe(
-      tap((res: any) => {
-        this.saveInLocalStorage(res.token, res.menu);
-      })
-    );
+    return this.http
+      .post(`https://imhotep-back.herokuapp.com/medic`, formData)
+      .pipe(
+        tap((res: any) => {
+          this.saveInLocalStorage(res.token, res.menu);
+        })
+      );
   }
 
   updateUser(data: { email: string; name: string; role: string }) {
@@ -89,7 +91,9 @@ export class UsuarioService {
     return this.http.put(`${baseUrl}/usuarios/${this.uid}`, data, this.headers);
   }
 
-  loginUser(body: FormData) {}
+  loginUser(body: any) {
+    return this.http.get(`https://imhotep-back.herokuapp.com/medic`, body);
+  }
 
   logoutUser() {
     localStorage.removeItem('token');

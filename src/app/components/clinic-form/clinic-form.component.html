@@ -14,7 +14,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="exampleModalLabel1">
-            Crea una historia clínica
+            Crea una cita médica
           </h4>
           <button
             type="button"
@@ -33,19 +33,19 @@
             *ngIf="isVisible"
           >
             <div class="mb-3">
-              <label for="admision_date">Fecha de admisión</label>
+              <label for="admisionDate">Fecha de admisión</label>
               <input
                 class="form-control"
                 type="date"
-                id="admision_date"
-                formControlName="admision_date"
+                id="admisionDate"
+                formControlName="admisionDate"
               />
-              <small class="text-danger" *ngIf="isFieldInvalid('admision_date')"
+              <small class="text-danger" *ngIf="isFieldInvalid('admisionDate')"
                 >Ingrese una fecha válida.</small
               >
             </div>
 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="diagnostic">Diagnóstico</label>
               <textarea
                 class="form-control"
@@ -59,47 +59,47 @@
               <small class="text-danger" *ngIf="isFieldInvalid('diagnostic')"
                 >El diagnóstico no debe superar los 500 caracteres.</small
               >
-            </div>
+            </div> -->
 
             <div class="mb-3">
-              <label for="medic_name">Nombre del médico</label>
+              <label for="medicName">Nombre del médico</label>
               <input
                 class="form-control"
                 type="text"
                 placeholder="Ingrese el nombre del médico"
-                formControlName="medic_name"
+                formControlName="medicName"
               />
-              <small class="text-danger" *ngIf="isFieldInvalid('medic_name')"
+              <small class="text-danger" *ngIf="isFieldInvalid('medicName')"
                 >Ingrese un nombre válido.</small
               >
             </div>
 
             <div class="row mb-3">
               <div class="col-7">
-                <label for="patient_age">Nacimiento del paciente</label>
+                <label for="patientBirthdate">Nacimiento del paciente</label>
                 <input
                   class="form-control"
                   type="date"
-                  id="patient_birth_date"
-                  formControlName="patient_birth_date"
+                  id="patientBirthDate"
+                  formControlName="patientBirthdate"
                 />
                 <small
                   class="text-danger"
-                  *ngIf="isFieldInvalid('patient_birth_date')"
+                  *ngIf="isFieldInvalid('patientBirthdate')"
                   >Ingrese una fecha válida.</small
                 >
               </div>
 
               <div class="col">
-                <label for="patient_dni">DNI del paciente</label>
+                <label for="patientDni">DNI del paciente</label>
                 <input
                   class="form-control"
                   type="text"
-                  id="patient_dni"
+                  id="patientDni"
                   maxlength="8"
-                  formControlName="patient_dni"
+                  formControlName="patientDni"
                 />
-                <small class="text-danger" *ngIf="isFieldInvalid('patient_dni')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patientDni')"
                   >Ingrese un número de DNI válido.</small
                 >
               </div>
@@ -107,31 +107,31 @@
 
             <div class="row mb-3">
               <div class="col">
-                <label for="patient_name">Nombre del paciente</label>
+                <label for="patientName">Nombre del paciente</label>
                 <input
                   class="form-control"
                   type="text"
-                  id="patient_name"
+                  id="patientName"
                   placeholder="Ingrese el nombre del paciente"
-                  formControlName="patient_name"
+                  formControlName="patientName"
                 />
-                <small class="text-danger" *ngIf="isFieldInvalid('patient_name')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patientName')"
                   >Ingrese un nombre válido de paciente.</small
                 >
               </div>
             </div>
             <div class="row">
               <div class="col-5">
-                <label for="patient_sex">Sexo del paciente</label>
+                <label for="patientSex">Sexo del paciente</label>
                 <select
-                  id="patient_sex"
+                  id="patientSex"
                   class="form-control"
-                  formControlName="patient_sex"
+                  formControlName="patientSex"
                 >
                   <option value="hombre">Masculino</option>
                   <option value="mujer">Femenino</option>
                 </select>
-                <small class="text-danger" *ngIf="isFieldInvalid('patient_sex')"
+                <small class="text-danger" *ngIf="isFieldInvalid('patientSex')"
                   >Sea lo que haya ingresado, no es una opción válida.</small
                 >
               </div>
@@ -148,7 +148,7 @@
             Cancelar
           </button>
           <button type="submit" class="btn btn-primary" (click)="submitForm()">
-            Crear historia clínica
+            Crear cita médica
           </button>
         </div>
         <div

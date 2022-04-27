@@ -29,9 +29,9 @@ export class ClinicFormComponent implements OnInit {
 
   createForm() {
     this.clinicHistoryForm = this.fb.group({
-      admision_date: ['', Validators.required],
-      diagnostic: ['', [Validators.required, Validators.maxLength(500)]],
-      medic_name: [
+      admisionDate: ['', Validators.required],
+      // diagnostic: ['', [Validators.required, Validators.maxLength(500)]],
+      medicName: [
         '',
         [
           Validators.required,
@@ -40,8 +40,8 @@ export class ClinicFormComponent implements OnInit {
           ),
         ],
       ],
-      patient_birth_date: ['', Validators.required],
-      patient_dni: [
+      patientBirthdate: ['', Validators.required],
+      patientDni: [
         '',
         [
           Validators.required,
@@ -49,7 +49,7 @@ export class ClinicFormComponent implements OnInit {
           Validators.pattern(/^[0-9]+$/),
         ],
       ],
-      patient_name: [
+      patientName: [
         '',
         [
           Validators.required,
@@ -59,7 +59,7 @@ export class ClinicFormComponent implements OnInit {
           ),
         ],
       ],
-      patient_sex: ['', Validators.required],
+      patientSex: ['', Validators.required],
     });
   }
 
@@ -100,13 +100,12 @@ export class ClinicFormComponent implements OnInit {
   private cleanFormFields() {
     if (this.clinicHistoryForm.dirty) {
       this.clinicHistoryForm.setValue({
-        admision_date: '',
-        diagnostic: '',
-        medic_name: '',
-        patient_birth_date: '',
-        patient_dni: '',
-        patient_name: '',
-        patient_sex: '',
+        admisionDate: '',
+        medicName: '',
+        patientBirthdate: '',
+        patientDni: '',
+        patientName: '',
+        patientSex: '',
       });
       this.closeModal();
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClinicHistoryService } from '../../services/clinic-history.service';
-import { History } from '../../models/clinicHistory.model';
+import { Appointment } from '../../models/clinicHistory.model';
 import Swal from 'sweetalert2';
 import { ModalImageService } from '../../services/modal-image.service';
 
@@ -12,7 +12,7 @@ import { ModalImageService } from '../../services/modal-image.service';
 })
 export class DashboardComponent implements OnInit {
   public historyClinicForm!: FormGroup;
-  public clinicHistories: History[] = [];
+  public appointments: Appointment[] = [];
 
   constructor(
     private clinicHistoryService: ClinicHistoryService,
@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
   }
 
   loadHistories() {
-    this.clinicHistoryService.loadClinicHistories().subscribe((res) => {
-      this.clinicHistories = res.reverse();
+    this.clinicHistoryService.loadAppointments().subscribe((res) => {
+      this.appointments = res;
     });
   }
 
@@ -41,24 +41,25 @@ export class DashboardComponent implements OnInit {
   }
 
   createClinicHistory() {
-    const data: History = this.historyClinicForm.value;
+    console.log('create appointment:', this.historyClinicForm.value);
 
-    const body: FormData = new FormData();
+    const data: Appointment = this.historyClinicForm.value;
 
-    body.append('admision_date', data.admision_date);
-    body.append('diagnostic', data.diagnostic);
-    body.append('medic_name', data.medic_name);
-    body.append('patient_birth_date', data.patient_birth_date);
-    body.append('patient_dni', data.patient_dni);
-    body.append('patient_name', data.patient_name);
-    body.append('patient_sex', data.patient_sex);
+    const body = {
+      admisionDate: data.admisionDate,
+      medicName: data.medicName,
+      patientBirthdate: data.patientBirthdate,
+      patientDni: data.patientDni,
+      patientName: data.patientName,
+      patientSex: data.patientSex,
+    };
 
     Swal.showLoading();
 
-    this.clinicHistoryService.createClinicHistory(body).subscribe(
-      () => {
+    this.clinicHistoryService.createMedicalAppointment(body).subscribe(
+      (res: any) => {
         this.modal.closeModal();
-        Swal.fire('¡Éxito!', 'Historia clínica creada.', 'success');
+        Swal.fire('¡Éxito!', `${res.message}`, 'success');
         this.loadHistories();
       },
       (err) => {

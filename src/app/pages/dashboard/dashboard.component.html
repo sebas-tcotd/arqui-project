@@ -4,26 +4,26 @@
   data-bs-toggle="modal"
   data-bs-target="#exampleModal"
 >
-  Crear historia
+  Crear cita médica
 </button>
 
-<div *ngIf="clinicHistories.length === 0; else withHistories">
+<div *ngIf="appointments.length === 0; else withAppointments">
   <p>Todavía no hay historias clínicas. ¡Crea una ahora!</p>
 </div>
 
-<ng-template #withHistories>
-  <h2>Historias clínicas</h2>
+<ng-template #withAppointments>
+  <h2>Citas médicas</h2>
   <div class="row">
-    <div class="col" *ngFor="let history of clinicHistories">
+    <div class="col" *ngFor="let history of appointments">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
-            Número de historia:
-            <strong>{{ history.history_number | clinicNumber }}</strong>
+            ID de la cita:
+            <strong>{{ history._id | slice: -4 | clinicNumber }}</strong>
           </h5>
           <h5 class="card-subtitle mb-2">
             Médico encargado:
-            <strong class="text-bold">{{ history.medic_name }}</strong>
+            <strong class="text-bold">{{ history.medicName }}</strong>
           </h5>
 
           <table class="table table-responsive">
@@ -34,16 +34,15 @@
                 <th scope="col">Fecha de nacimiento</th>
                 <th scope="col">Fecha de admisión</th>
                 <th scope="col">Sexo</th>
-                <th scope="col">Diagnóstico</th>
+                <!-- <th scope="col">Diagnóstico</th> -->
               </tr>
             </thead>
             <tbody>
-              <td>{{ history.patient_name }}</td>
-              <td>{{ history.patient_dni }}</td>
-              <td>{{ history.patient_birth_date | date }}</td>
-              <td>{{ history.admision_date | date }}</td>
-              <td>{{ history.patient_sex | patientSex }}</td>
-              <td>{{ history.diagnostic }}</td>
+              <td>{{ history.patientName }}</td>
+              <td>{{ history.patientDni }}</td>
+              <td>{{ history.patientBirthdate | date }}</td>
+              <td>{{ history.admisionDate | date }}</td>
+              <td>{{ history.patientSex | patientSex }}</td>
             </tbody>
           </table>
         </div>

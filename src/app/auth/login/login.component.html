@@ -23,10 +23,10 @@
           <div class="col-xs-12">
             <input
               class="form-control"
-              type="email"
-              required=""
-              placeholder="Username"
-              formControlName="username"
+              type="number"
+              required
+              placeholder="CPM"
+              formControlName="cpm"
             />
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input
               class="form-control"
               type="password"
-              placeholder="Password"
+              placeholder="Contraseña"
               formControlName="password"
             />
           </div>
@@ -49,14 +49,14 @@
                 class="filled-in chk-col-light-blue"
                 formControlName="rememberMe"
               />
-              <label for="checkbox-signup"> Remember me </label>
+              <label for="checkbox-signup"> Recuérdame </label>
             </div>
-            <a
+            <!-- <a
               href="javascript:void(0)"
               id="to-recover"
               class="text-dark pull-right"
               ><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a
-            >
+            > -->
           </div>
         </div>
         <div class="form-group text-center m-t-20">
@@ -71,9 +71,9 @@
         </div>
         <div class="form-group m-b-0">
           <div class="col-sm-12 text-center">
-            Don't have an account?
+            ¿No tenés cuenta wacho?
             <a routerLink="/register" class="text-primary m-l-5"
-              ><b>Sign Up</b></a
+              ><b>Regístrate</b></a
             >
           </div>
         </div>
@@ -100,11 +100,7 @@
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
             <button
-              class="
-                btn btn-primary btn-lg btn-block
-                text-uppercase
-                waves-effect waves-light
-              "
+              class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
               type="submit"
             >
               Reset

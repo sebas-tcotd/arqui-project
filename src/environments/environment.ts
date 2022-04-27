@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  BASE_URL: 'http://198.199.78.87/api/v4',
+  BASE_URL: 'https://imhotep-back.herokuapp.com',
   production: false,
 };
 

@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'clinicNumber',
 })
 export class ClinicNumberPipe implements PipeTransform {
-  transform(value: number): string {
-    return `HC-${value}`;
+  transform(value: string): string {
+    return `CM-${value}`;
   }
 }
