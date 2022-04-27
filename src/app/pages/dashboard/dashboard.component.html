@@ -19,7 +19,7 @@
         <div class="card-body">
           <h5 class="card-title">
             ID de la cita:
-            <strong>{{ history._id | slice: -4 | clinicNumber }}</strong>
+            <strong>{{ history._id | slice: -4 | clinicNumber | uppercase }}</strong>
           </h5>
           <h5 class="card-subtitle mb-2">
             Médico encargado:
