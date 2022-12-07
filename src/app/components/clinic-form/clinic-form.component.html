@@ -14,7 +14,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="exampleModalLabel1">
-            Crea una cita médica
+            Crea una curso
           </h4>
           <button
             type="button"
@@ -62,7 +62,7 @@
             </div> -->
 
             <div class="mb-3">
-              <label for="medicName">Nombre del médico</label>
+              <label for="medicName">Categoría del curso</label>
               <input
                 class="form-control"
                 type="text"
@@ -70,28 +70,15 @@
                 formControlName="medicName"
               />
               <small class="text-danger" *ngIf="isFieldInvalid('medicName')"
-                >Ingrese un nombre válido.</small
+                >Ingrese una categoría válida.</small
               >
             </div>
 
             <div class="row mb-3">
-              <div class="col-7">
-                <label for="patientBirthdate">Nacimiento del paciente</label>
-                <input
-                  class="form-control"
-                  type="date"
-                  id="patientBirthDate"
-                  formControlName="patientBirthdate"
-                />
-                <small
-                  class="text-danger"
-                  *ngIf="isFieldInvalid('patientBirthdate')"
-                  >Ingrese una fecha válida.</small
-                >
-              </div>
+           
 
               <div class="col">
-                <label for="patientDni">DNI del paciente</label>
+                <label for="patientDni">ID del curso</label>
                 <input
                   class="form-control"
                   type="text"
@@ -100,14 +87,14 @@
                   formControlName="patientDni"
                 />
                 <small class="text-danger" *ngIf="isFieldInvalid('patientDni')"
-                  >Ingrese un número de DNI válido.</small
+                  >Ingrese un ID válido.</small
                 >
               </div>
             </div>
 
             <div class="row mb-3">
               <div class="col">
-                <label for="patientName">Nombre del paciente</label>
+                <label for="patientName">Nombre del curso</label>
                 <input
                   class="form-control"
                   type="text"
@@ -116,26 +103,11 @@
                   formControlName="patientName"
                 />
                 <small class="text-danger" *ngIf="isFieldInvalid('patientName')"
-                  >Ingrese un nombre válido de paciente.</small
+                  >Ingrese un nombre válido.</small
                 >
               </div>
             </div>
-            <div class="row">
-              <div class="col-5">
-                <label for="patientSex">Sexo del paciente</label>
-                <select
-                  id="patientSex"
-                  class="form-control"
-                  formControlName="patientSex"
-                >
-                  <option value="hombre">Masculino</option>
-                  <option value="mujer">Femenino</option>
-                </select>
-                <small class="text-danger" *ngIf="isFieldInvalid('patientSex')"
-                  >Sea lo que haya ingresado, no es una opción válida.</small
-                >
-              </div>
-            </div>
+            
           </form>
         </div>
         <div class="modal-footer">
